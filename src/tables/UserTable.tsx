@@ -1,0 +1,46 @@
+import React from 'react';
+
+interface IProps {
+  users: { id: number; name: string; username: string; }[];
+  editRow: (user: {id: number; name: string; username: string}) => void;
+  deleteUser: (id: number) => void;
+}
+
+const UserTable: React.FC<IProps> = props => {
+  return (
+    <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        props.users.length > 0 ?
+        (
+          props.users.map( user => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.username}</td>
+              <td>
+                <button className="button muted-button" onClick={() => props.editRow(user)}>Edit</button>
+                <button className="button muted-button" onClick={() => props.deleteUser(user.id)}>Delete</button>
+              </td>
+            </tr>
+          ))
+        ) :
+        (
+          <tr>
+            <td colSpan={3}>No Users</td>
+          </tr>
+        )
+      }
+      
+    </tbody>
+  </table>
+  )
+}
+
+export default UserTable;
